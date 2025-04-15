@@ -1,4 +1,4 @@
-package com.hamderber.unclaimedftbchunksregenerate.config;
+package com.hamderber.unclaimedchunksregenerate.config;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,11 +1,11 @@
-package com.hamderber.unclaimedftbchunksregenerate;
+package com.hamderber.unclaimedchunksregenerate;
 
 import com.hamderber.chunklibrary.ChunkRegenerator;
 import com.hamderber.chunklibrary.data.ChunkAgeData;
 import com.hamderber.chunklibrary.events.ChunkEvent;
 import com.hamderber.chunklibrary.util.LevelHelper;
 import com.hamderber.chunklibrary.util.TimeHelper;
-import com.hamderber.unclaimedftbchunksregenerate.config.Config;
+import com.hamderber.unclaimedchunksregenerate.config.Config;
 
 import dev.ftb.mods.ftbchunks.api.FTBChunksAPI;
 import dev.ftb.mods.ftblibrary.math.ChunkDimPos;
@@ -24,7 +24,7 @@ public class OldChunkRegenerator {
 		long age = currentDay - lastGeneratedDay;
 		
 		if (age >= Config.REGEN_PERIODS.get(dimensionID).getAsInt()) {
-			UnclaimedFTBChunksRegenerate.LOGGER.debug("Chunk at " + event.pos.toString() + " has an age of " + age + 
+			UnclaimedChunksRegenerate.LOGGER.debug("Chunk at " + event.pos.toString() + " has an age of " + age + 
 					" days. Current day: " + currentDay + " Generated day: " + lastGeneratedDay);
 			
 			ChunkRegenerator.regenerateChunk(event.level, event.pos);
