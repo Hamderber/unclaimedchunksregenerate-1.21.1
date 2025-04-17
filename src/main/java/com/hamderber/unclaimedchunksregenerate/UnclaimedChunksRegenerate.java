@@ -20,7 +20,9 @@ public class UnclaimedChunksRegenerate
     public UnclaimedChunksRegenerate(IEventBus modEventBus, ModContainer modContainer)
     {
         LOGGER.info(MODID + " loaded!");
+        
         NeoForge.EVENT_BUS.register(new OldChunkRegenerator());
+        
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.CONFIG);
     }
 }

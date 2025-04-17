@@ -1,8 +1,8 @@
 package com.hamderber.unclaimedchunksregenerate;
 
 import com.hamderber.chunklibrary.ChunkRegenerator;
-import com.hamderber.chunklibrary.data.ChunkAgeData;
-import com.hamderber.chunklibrary.events.ChunkEvent;
+import com.hamderber.chunklibrary.data.ChunkData;
+import com.hamderber.chunklibrary.events.StartLoad;
 import com.hamderber.chunklibrary.util.LevelHelper;
 import com.hamderber.chunklibrary.util.TimeHelper;
 import com.hamderber.unclaimedchunksregenerate.config.Config;
@@ -13,23 +13,19 @@ import net.neoforged.bus.api.SubscribeEvent;
 
 public class OldChunkRegenerator {
 	@SubscribeEvent
-	private void regenChunkIfOld(ChunkEvent.StartLoad event) {
+	public void regenChunkIfOld(StartLoad event) {
 		String dimensionID = LevelHelper.getDimensionID(event.level);
+		
 		if (!Config.isDimensionAllowed(dimensionID)) return;
-		// Skip claimed chunks
+		
+		// Skip claimed chunks. Null is returned when the chunk isnt claimed
 		if (FTBChunksAPI.api().getManager().getChunk(new ChunkDimPos(LevelHelper.getDimensionKey(dimensionID), event.pos)) != null) return;
 		
-		long currentDay = TimeHelper.getCurrentDay(event.level);
-		long lastGeneratedDay = ChunkAgeData.get(event.level).getLastGeneratedDay(event.level, event.pos);
-		long age = currentDay - lastGeneratedDay;
-		
-		if (age >= Config.REGEN_PERIODS.get(dimensionID).getAsInt()) {
-			UnclaimedChunksRegenerate.LOGGER.debug("Chunk at " + event.pos.toString() + " has an age of " + age + 
-					" days. Current day: " + currentDay + " Generated day: " + lastGeneratedDay);
+		if (ChunkData.get(event.level).getChunkAge(event.level, event.pos) >= Config.DIMENSION_REGEN_PERIODS.get(dimensionID).getAsInt()) {
 			
 			ChunkRegenerator.regenerateChunk(event.level, event.pos);
 			
-			ChunkAgeData.get(event.level).setLastGeneratedDay(event.level, event.pos, currentDay);
+			ChunkData.get(event.level).setLastGeneratedDayNow(event.level, event.pos);
 		}
 	}
 }

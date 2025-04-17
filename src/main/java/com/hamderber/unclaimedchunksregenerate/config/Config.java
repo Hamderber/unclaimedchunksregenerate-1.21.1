@@ -6,36 +6,37 @@ import java.util.Map;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.common.ModConfigSpec.IntValue;
 
+import com.hamderber.chunklibrary.config.ConfigAPI;
+
 public class Config {
-	public static final Map<String, IntValue> REGEN_PERIODS = new HashMap<>();
     private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
 
-    public static ModConfigSpec CONFIG;
+    public static final Map<String, IntValue> DIMENSION_REGEN_PERIODS = new HashMap<>();
+
+    public static final ModConfigSpec CONFIG;
 
     static {
-        BUILDER.comment("Unclaimed Chunk Regeneration Settings")
-            .push("regen");
+        BUILDER.comment("Chunk Regeneration Settings")
+            .push("regen_settings");
 
-        addRegenDimension("minecraft:overworld", 365);
-        addRegenDimension("minecraft:the_nether", 30);
-        addRegenDimension("minecraft:the_end", 30);
+        registerDimension("minecraft:overworld", 365, true, true, false);
+        registerDimension("minecraft:the_nether", 30, true, true, false);
+        registerDimension("minecraft:the_end", 30, true, true, false);
 
         BUILDER.pop();
         CONFIG = BUILDER.build();
     }
 
-    private static void addRegenDimension(String dimensionID, int defaultDays) {
-        IntValue value = BUILDER.comment("Days between regen for dimension: " + dimensionID)
-            .defineInRange(dimensionID + ".daysBetweenRegen", defaultDays, 1, Integer.MAX_VALUE);
-        REGEN_PERIODS.put(dimensionID, value);
-    }
-
-    public static int getDaysBetween(String dimensionID) {
-        IntValue val = REGEN_PERIODS.get(dimensionID);
-        return val != null ? val.get() : -1;
+    private static void registerDimension(String id, int days, boolean randomOre, boolean randomTree, boolean oreDisabled) {
+        DIMENSION_REGEN_PERIODS.put(id, BUILDER.defineInRange(id + ".daysBetweenRegen", days, 1, Integer.MAX_VALUE));
+        ConfigAPI.FEATURE_REGEN_PERIODS.put(id, BUILDER.defineInRange(id + ".featureRegenPeriod", days, 1, Integer.MAX_VALUE));
+        ConfigAPI.ORE_DISABLED.put(id, BUILDER.define(id + ".oreDisabled", oreDisabled));
+        ConfigAPI.RANDOM_ORE_ENABLED.put(id, BUILDER.define(id + ".randomOreEnabled", randomOre));
+        ConfigAPI.RANDOM_TREE_ENABLED.put(id, BUILDER.define(id + ".randomTreeEnabled", randomTree));
     }
     
     public static boolean isDimensionAllowed(String dimensionID) {
-    	return REGEN_PERIODS.containsKey(dimensionID);
+    	return DIMENSION_REGEN_PERIODS.containsKey(dimensionID);
     }
 }
+

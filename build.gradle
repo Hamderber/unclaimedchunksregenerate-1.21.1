@@ -1,4 +1,5 @@
 plugins {
+	id 'eclipse'
     id 'java-library'
     id 'maven-publish'
     id 'net.neoforged.moddev' version '2.0.80'
@@ -131,7 +132,7 @@ dependencies {
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
     implementation files('libs/ftb-chunks-neoforge-2101.1.8.jar')
     implementation files('libs/ftb-library-neoforge-2101.1.12.jar')
-    implementation files('libs/chunklibrary-1.0.0.jar')
+    implementation files('libs/chunklibrary-1.0.1.jar')
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.
