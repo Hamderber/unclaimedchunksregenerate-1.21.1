@@ -20,7 +20,7 @@ public class OldChunkRegenerator {
 		// Skip claimed chunks. Null is returned when the chunk isnt claimed
 		if (FTBChunksAPI.api().getManager().getChunk(new ChunkDimPos(LevelHelper.getDimensionKey(dimensionID), event.pos)) != null) return;
 		
-		if (ChunkData.get(event.level).getChunkAge(event.level, event.pos) >= Config.DIMENSION_REGEN_PERIODS.get(dimensionID).getAsInt()) {
+		if (ChunkData.get(event.level).shouldResetChunk(event.level, event.pos, Config.DIMENSION_REGEN_PERIODS.get(dimensionID).getAsInt())) {
 			
 			ChunkRegenerator.regenerateChunk(event.level, event.pos);
 			
