@@ -15,6 +15,7 @@ public class Config {
     private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
 
     public static final Map<String, IntValue> DIMENSION_REGEN_PERIODS = new HashMap<>();
+    public static final Map<String, IntValue> CLAIM_DISTANCE = new HashMap<>();
 
     public static final ModConfigSpec CONFIG;
 
@@ -38,22 +39,35 @@ public class Config {
     	        .comment(" Number of chunks to scan per batch. This is the highest impact setting of them all!")
     	        .defineInRange("maxChunkScansPerBatch", 3, 1, Integer.MAX_VALUE); // default 3
         
-        registerDimension("minecraft:overworld", 365, 25, 0.5, true, true, false, true);
-        registerDimension("minecraft:the_nether", 30, 50, 0.8, true, true, false, true);
-        registerDimension("minecraft:the_end", 30, 10, 1.0, true, true, false, true);
-
+        registerDimension("minecraft:overworld", 365, 3, 25, 0.5, true, true, false, true);
+        registerDimension("minecraft:the_nether", 30, 1, 50, 0.8, true, true, false, true);
+        registerDimension("minecraft:the_end", 30, 0, 10, 1.0, true, true, false, true);
+        registerDimension("allthemodium:mining", 7, 50, 0, 0.3, true, true, false, true);
+        registerDimension("allthemodium:the_other", 30, 1, 50, 0.8, true, true, false, true);
+        registerDimension("allthemodium:the_beyond", 365, 5, 5, 1.0, true, true, false, true);
+        registerDimension("lostcities:lostcity", 180, 2, 25, 0.5, true, true, false, true);
+        registerDimension("twilightforest:twilight_forest", 180, 3, 25, 0.5, true, true, false, true);
+        registerDimension("aether:the_aether", 30, 3, 25, 1.0, true, true, false, true);
+        registerDimension("the_bumblezone:the_bumblezone", 30, 2, 25, 0.5, true, true, false, true);
+        
         BUILDER.pop();
         CONFIG = BUILDER.build();
     }
 
-    private static void registerDimension(String id, int days, int airDelta, double yPercent, boolean randomOre, boolean randomTree, boolean oreDisabled, boolean randomMob) {
+    private static void registerDimension(String id, int days, int distanceFromClaim, int airDelta, double yPercent, boolean randomOre, boolean randomTree, boolean oreDisabled, boolean randomMob) {
     	IntValue regenPeriod = BUILDER
 	        .comment(" How many tick-based game days before unclaimed chunks in " + id + " are eligible for regeneration", 
 	        		" Using /time will NOT impact this. '/chunklibrary age..' will.")
 	        .defineInRange(id + ".daysBetweenRegen", days, 1, Integer.MAX_VALUE);
-
-	    DIMENSION_REGEN_PERIODS.put(id, regenPeriod);
+    	
+    	DIMENSION_REGEN_PERIODS.put(id, regenPeriod);
 	    ConfigAPI.FEATURE_REGEN_PERIODS.put(id, regenPeriod);
+    	
+    	IntValue distance = BUILDER
+    	        .comment(" The cubic radius around a claimed chunk in " + id + " where unclaimed chunks won't regenerate.")
+    	        .defineInRange(id + ".distanceFromClaim", distanceFromClaim, 0, 10);
+    	CLAIM_DISTANCE.put(id, distance);
+	    
 
 	     IntValue airDeltaSetting = BUILDER
             .comment(" The minimum +/- change in estimated air blocks for " + id + " required for a chunk to be elligble for regeneration.",
