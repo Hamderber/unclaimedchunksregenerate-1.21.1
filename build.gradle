@@ -111,7 +111,7 @@ configurations {
 dependencies {
     implementation files('libs/ftb-chunks-neoforge-2101.1.8.jar')
     implementation files('libs/ftb-library-neoforge-2101.1.12.jar')
-    implementation files('libs/chunklibrary-1.0.1.jar')
+    implementation files('libs/chunklibrary-1.1.0.jar')
 }
 
 var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {

@@ -6,7 +6,6 @@ import java.util.Map;
 import com.hamderber.chunklibrary.config.ConfigAPI;
 
 import net.neoforged.neoforge.common.ModConfigSpec;
-import net.neoforged.neoforge.common.ModConfigSpec.ConfigValue;
 import net.neoforged.neoforge.common.ModConfigSpec.DoubleValue;
 import net.neoforged.neoforge.common.ModConfigSpec.IntValue;
 

@@ -33,9 +33,9 @@ public class OldChunkRegenerator {
 	
 	private boolean isChunkClaimed(ResourceKey<Level> dimKey, ChunkPos chunkPos) {
 		boolean claimed = FTBChunksAPI.api().getManager().getChunk(new ChunkDimPos(dimKey, chunkPos)) != null;
-	    if (claimed) {
-	        UnclaimedChunksRegenerate.LOGGER.debug("Claimed chunk detected: " + dimKey.location() + " @ " + chunkPos);
-	    }
+//	    if (claimed) {
+//	        UnclaimedChunksRegenerate.LOGGER.debug("Claimed chunk detected: " + dimKey.location() + " @ " + chunkPos);
+//	    }
 	    return claimed;
 	}
 	
