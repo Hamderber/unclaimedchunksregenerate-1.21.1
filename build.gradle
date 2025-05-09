@@ -18,6 +18,14 @@ tasks.named('wrapper', Wrapper).configure {
 version = mod_version
 group = mod_group_id
 
+repositories {
+    mavenLocal()
+    maven {
+        name = "CurseMaven"
+        url = "https://cursemaven.com"
+    }
+}
+
 base {
     archivesName = mod_id
 }
@@ -109,9 +117,14 @@ configurations {
 }
 
 dependencies {
+//    implementation "curse.maven:ftb-library-forge-404465:5583834"
+//    implementation "curse.maven:chunk-library-1242855:6505222"
+    implementation "curse.maven:minecolonies-245506:6443521"
+    implementation "curse.maven:open-parties-and-claims-636608:6476205"
     implementation files('libs/ftb-chunks-neoforge-2101.1.8.jar')
     implementation files('libs/ftb-library-neoforge-2101.1.12.jar')
-    implementation files('libs/chunklibrary-1.1.0.jar')
+    implementation files('libs/chunklibrary-1.1.0b.jar')
+//    implementation "curse.maven:ftb-chunks-forge-314906:5598952"
 }
 
 var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
