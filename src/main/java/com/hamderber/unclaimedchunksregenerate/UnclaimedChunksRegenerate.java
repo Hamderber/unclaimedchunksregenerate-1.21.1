@@ -10,7 +10,6 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
-import net.neoforged.neoforge.common.NeoForge;
 
 @Mod(UnclaimedChunksRegenerate.MODID)
 public class UnclaimedChunksRegenerate
@@ -20,12 +19,12 @@ public class UnclaimedChunksRegenerate
    
     public UnclaimedChunksRegenerate(IEventBus modEventBus, ModContainer modContainer)
     {
-        LOGGER.info(MODID + " loaded!");
-        
-        NeoForge.EVENT_BUS.register(new OldChunkRegenerator());
+        modEventBus.register(new OldChunkRegenerator());
         
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.CONFIG);
 
         ModListener.init();
+
+        LOGGER.info(MODID + " loaded!");
     }
 }
