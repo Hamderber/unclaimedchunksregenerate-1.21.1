@@ -1,5 +1,6 @@
 package com.hamderber.unclaimedchunksregenerate;
 
+import com.hamderber.unclaimedchunksregenerate.util.ModListener;
 import org.slf4j.Logger;
 
 import com.hamderber.unclaimedchunksregenerate.config.Config;
@@ -24,5 +25,7 @@ public class UnclaimedChunksRegenerate
         NeoForge.EVENT_BUS.register(new OldChunkRegenerator());
         
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.CONFIG);
+
+        ModListener.init();
     }
 }

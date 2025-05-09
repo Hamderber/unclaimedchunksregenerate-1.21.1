@@ -87,14 +87,14 @@ description='''${mod_description}'''
 
 [[dependencies.${mod_id}]]
     modId="ftblibrary"
-    type="required"
+    type="optional"
     versionRange="[0,)"
     ordering="AFTER"
     side="BOTH"
 
 [[dependencies.${mod_id}]]
     modId="ftbchunks"
-    type="required"
+    type="optional"
     versionRange="[0,)"
     ordering="AFTER"
     side="BOTH"
